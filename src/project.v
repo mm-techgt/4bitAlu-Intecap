@@ -1,56 +1,27 @@
-# Tiny Tapeout project information
-project:
-  title:        "alu de 4 bits"      # Project title
-  author:       "mm"      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "una alu que realiza 4 operaciones"      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+/*
+ * Copyright (c) 2024 Your Name
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-  # How many tiles your design occupies? A single tile is about 340x160 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 3x4 or 4x4
+`default_nettype none
 
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_ALU4b"
+module tt_um_example (
+    input  wire [7:0] ui_in,    // Dedicated inputs
+    output wire [7:0] uo_out,   // Dedicated outputs
+    input  wire [7:0] uio_in,   // IOs: Input path
+    output wire [7:0] uio_out,  // IOs: Output path
+    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
+    input  wire       ena,      // always 1 when the design is powered, so you can ignore it
+    input  wire       clk,      // clock
+    input  wire       rst_n     // reset_n - low to reset
+);
 
-  # List your project's source files here.
-  # Source files must be in ./src and you must list each source file separately, one per line.
-  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
-  source_files:
-    - "project.v"
+  // All output pins must be assigned. If not used, assign to 0.
+  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+  assign uio_out = 0;
+  assign uio_oe  = 0;
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
-pinout:
-  # Inputs
-  ui[0]: "b0"
-  ui[1]: "b1"
-  ui[2]: "b2"
-  ui[3]: "b3"
-  ui[4]: "a0"
-  ui[5]: "a1"
-  ui[6]: "a2"
-  ui[7]: "a3"
+  // List all unused inputs to prevent warnings
+  wire _unused = &{ena, clk, rst_n, 1'b0};
 
-  # Outputs
-  uo[0]: "c0"
-  uo[1]: "c1"
-  uo[2]: "c2"
-  uo[3]: "c3"
-  uo[4]: "c4"
-  uo[5]: "c5"
-  uo[6]: "c6"
-  uo[7]: "c7"
-
-  # Bidirectional pins
-  uio[0]: "op0"
-  uio[1]: "op1"
-  uio[2]: "op2"
-  uio[3]: "op3"
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: "carry"
-  uio[7]: "overflow"
-
-# Do not change!
-yaml_version: 6
+endmodule
