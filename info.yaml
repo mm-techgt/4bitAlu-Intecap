@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "alu de 4 bits"      # Project title
-  author:       "arturo"      # Your name
+  author:       "mm"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "una alu que realiza 4 operaciones"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
